@@ -26,4 +26,4 @@ export const getServerStatus = () => {
 };
 
 // WebSocket URL
-export const WS_URL = 'wss://ems-backend-e79r.onrender.com/';
+export const WS_URL = import.meta.env.VITE_WS_URL || 'wss://ems-backend-e79r.onrender.com/';

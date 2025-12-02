@@ -1,16 +1,73 @@
-# React + Vite
+# EMS Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+에너지 관리 시스템(Energy Management System) 프론트엔드 대시보드
 
-Currently, two official plugins are available:
+## 🚀 기능
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **실시간 모니터링**: WebSocket을 통한 실시간 데이터 수신
+- **전력 현황**: 전압, 전류, 전력 모니터링
+- **배터리 상태**: SOC, 전압, 온도 표시
+- **태양광 발전**: PV 전압, 전류, 발전량 모니터링
+- **계통 연계**: 그리드 상태, AC 출력, 부하율 표시
 
-## React Compiler
+## 📋 기술 스택
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- Vite
+- Axios (REST API)
+- WebSocket (실시간 통신)
 
-## Expanding the ESLint configuration
+## 🛠️ 설치 및 실행
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
+
+# 프로덕션 빌드
+npm run build
+```
+
+## 🔗 API 연동
+
+### REST API
+| 용도 | 메서드 | 엔드포인트 |
+|------|--------|------------|
+| 최신 데이터 | GET | `/api/v1/dashboard/latest` |
+| 그래프용 | GET | `/api/v1/dashboard/recent?limit=50` |
+| 기간 조회 | GET | `/api/v1/dashboard/history?start=…&end=…` |
+| 통계 | GET | `/api/v1/dashboard/stats?limit=100` |
+| 서버 상태 | GET | `/api/v1/dashboard/status` |
+
+### WebSocket
+실시간 데이터 수신을 위한 WebSocket 연결 지원
+
+## ⚙️ 환경 설정
+
+`.env` 파일을 생성하여 백엔드 URL을 설정하세요:
+
+```env
+VITE_API_URL=https://your-backend-url.com/api/v1
+VITE_WS_URL=wss://your-backend-url.com/
+```
+
+## 📁 프로젝트 구조
+
+```
+src/
+├── api/
+│   ├── axios.js          # Axios 인스턴스 설정
+│   └── dashboardApi.js   # 대시보드 API 함수
+├── pages/
+│   ├── Dashboard.jsx     # 대시보드 페이지
+│   └── Dashboard.css     # 대시보드 스타일
+├── App.jsx               # 앱 라우팅
+├── App.css               # 전역 스타일
+└── main.jsx              # 엔트리 포인트
+```
+
+## 📄 라이선스
+
+MIT License
