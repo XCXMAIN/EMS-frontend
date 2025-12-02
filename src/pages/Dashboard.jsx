@@ -1,66 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { getLatestData, WS_URL } from '../api/dashboardApi';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
-function Dashboard() {
-  const [data, setData] = useState(null);
-  const [connectionStatus, setConnectionStatus] = useState('connecting');
+function Dashboard({ data, connectionStatus }) {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const wsRef = useRef(null);
-
-  // REST API로 초기 데이터 로드
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const response = await getLatestData();
-        setData(response.data);
-      } catch (error) {
-        console.error('초기 데이터 로드 실패:', error);
-      }
-    };
-    fetchInitialData();
-  }, []);
-
-  // WebSocket 연결
-  useEffect(() => {
-    const connectWebSocket = () => {
-      wsRef.current = new WebSocket(WS_URL);
-
-      wsRef.current.onopen = () => {
-        console.log('WebSocket 연결됨');
-        setConnectionStatus('connected');
-      };
-
-      wsRef.current.onmessage = (event) => {
-        try {
-          const newData = JSON.parse(event.data);
-          setData(newData);
-        } catch (error) {
-          console.error('데이터 파싱 오류:', error);
-        }
-      };
-
-      wsRef.current.onclose = () => {
-        console.log('WebSocket 연결 종료');
-        setConnectionStatus('disconnected');
-        // 3초 후 재연결 시도
-        setTimeout(connectWebSocket, 3000);
-      };
-
-      wsRef.current.onerror = (error) => {
-        console.error('WebSocket 오류:', error);
-        setConnectionStatus('error');
-      };
-    };
-
-    connectWebSocket();
-
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
-      }
-    };
-  }, []);
+  const navigate = useNavigate();
 
   // 시계 업데이트
   useEffect(() => {
@@ -142,10 +86,11 @@ function Dashboard() {
 
       <div className="dashboard-grid">
         {/* 전력 현황 카드 */}
-        <div className="card power-card">
+        <div className="card power-card clickable" onClick={() => navigate('/power')}>
           <div className="card-header">
             <span className="card-icon">⚡</span>
             <h3>전력 현황</h3>
+            <span className="card-arrow">→</span>
           </div>
           <div className="card-content">
             <div className="power-display">
@@ -166,10 +111,11 @@ function Dashboard() {
         </div>
 
         {/* 배터리 상태 카드 */}
-        <div className="card battery-card">
+        <div className="card battery-card clickable" onClick={() => navigate('/battery')}>
           <div className="card-header">
             <span className="card-icon">🔋</span>
             <h3>배터리 상태</h3>
+            <span className="card-arrow">→</span>
           </div>
           <div className="card-content">
             <div className="soc-display">
@@ -207,10 +153,11 @@ function Dashboard() {
         </div>
 
         {/* 태양광 발전 카드 */}
-        <div className="card pv-card">
+        <div className="card pv-card clickable" onClick={() => navigate('/pv')}>
           <div className="card-header">
             <span className="card-icon">☀️</span>
             <h3>태양광 발전</h3>
+            <span className="card-arrow">→</span>
           </div>
           <div className="card-content">
             <div className="power-display">
@@ -238,10 +185,11 @@ function Dashboard() {
         </div>
 
         {/* 계통/출력 카드 */}
-        <div className="card output-card">
+        <div className="card output-card clickable" onClick={() => navigate('/grid')}>
           <div className="card-header">
             <span className="card-icon">🔌</span>
             <h3>계통 및 출력</h3>
+            <span className="card-arrow">→</span>
           </div>
           <div className="card-content">
             <div className="grid-status">

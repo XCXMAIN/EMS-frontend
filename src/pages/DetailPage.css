@@ -1,0 +1,279 @@
+.detail-page {
+  padding: 1.5rem;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.detail-header {
+  margin-bottom: 2rem;
+}
+
+.back-btn {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #374151;
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+}
+
+.back-btn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.detail-header h1 {
+  margin: 0.5rem 0;
+  font-size: 1.75rem;
+  color: #1f2937;
+}
+
+.last-update {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.detail-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.detail-main-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.main-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.main-value .value {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.main-value .unit {
+  font-size: 1.5rem;
+  color: #6b7280;
+}
+
+.main-value.pv .value {
+  color: #f59e0b;
+}
+
+.main-value.grid-value .value {
+  color: #8b5cf6;
+}
+
+.main-label {
+  margin: 1rem 0 0;
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+/* 배터리 상세 */
+.battery-main {
+  border-top: 4px solid #10b981;
+}
+
+.soc-large {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 1rem;
+}
+
+.soc-large svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.soc-bg-large {
+  fill: none;
+  stroke: #e5e7eb;
+  stroke-width: 10;
+}
+
+.soc-progress-large {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.soc-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.soc-center .value {
+  display: block;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.soc-center .unit {
+  font-size: 1.25rem;
+  color: #6b7280;
+}
+
+.soc-center .status {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+/* PV 상세 */
+.pv-main {
+  border-top: 4px solid #f59e0b;
+}
+
+.pv-status-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.pv-value {
+  color: #f59e0b !important;
+}
+
+/* Grid 상세 */
+.grid-main {
+  border-top: 4px solid #8b5cf6;
+}
+
+.grid-status-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.grid-status-display.connected {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.grid-status-display.disconnected {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.status-icon {
+  font-size: 1.25rem;
+}
+
+/* 상세 그리드 */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.detail-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.detail-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.detail-card-header {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.detail-card-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.detail-card-value .value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.detail-card-value .unit {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.detail-card-value .status-text {
+  font-size: 1.25rem;
+}
+
+.detail-card-desc {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+}
+
+/* 부하 바 */
+.load-bar-large {
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 1rem 0 0.5rem;
+}
+
+.load-fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.5s ease;
+}
+
+.load-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* 반응형 */
+@media (max-width: 640px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-value .value {
+    font-size: 3rem;
+  }
+
+  .soc-large {
+    width: 160px;
+    height: 160px;
+  }
+
+  .soc-center .value {
+    font-size: 2.5rem;
+  }
+}
