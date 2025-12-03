@@ -21,7 +21,7 @@ function PowerDetail({ data }) {
       <div className="detail-content">
         <div className="detail-main-card">
           <div className="main-value">
-            <span className="value">{data.power?.toLocaleString() || 0}</span>
+            <span className="value">{(data.power || 0).toFixed(2)}</span>
             <span className="unit">W</span>
           </div>
           <p className="main-label">현재 전력</p>
@@ -31,7 +31,7 @@ function PowerDetail({ data }) {
           <div className="detail-card">
             <div className="detail-card-header">전압</div>
             <div className="detail-card-value">
-              <span className="value">{data.voltage || 0}</span>
+              <span className="value">{(data.voltage || 0).toFixed(2)}</span>
               <span className="unit">V</span>
             </div>
             <div className="detail-card-desc">시스템 전압</div>
@@ -40,7 +40,7 @@ function PowerDetail({ data }) {
           <div className="detail-card">
             <div className="detail-card-header">전류</div>
             <div className="detail-card-value">
-              <span className="value">{data.current || 0}</span>
+              <span className="value">{(data.current || 0).toFixed(2)}</span>
               <span className="unit">A</span>
             </div>
             <div className="detail-card-desc">시스템 전류</div>
@@ -49,7 +49,7 @@ function PowerDetail({ data }) {
           <div className="detail-card">
             <div className="detail-card-header">역률</div>
             <div className="detail-card-value">
-              <span className="value">{data.voltage && data.current ? ((data.power / (data.voltage * data.current)) * 100).toFixed(1) : 0}</span>
+              <span className="value">{data.voltage && data.current ? ((data.power / (data.voltage * data.current)) * 100).toFixed(2) : 0}</span>
               <span className="unit">%</span>
             </div>
             <div className="detail-card-desc">Power Factor</div>
@@ -58,7 +58,7 @@ function PowerDetail({ data }) {
           <div className="detail-card">
             <div className="detail-card-header">피상전력</div>
             <div className="detail-card-value">
-              <span className="value">{((data.voltage || 0) * (data.current || 0)).toFixed(0)}</span>
+              <span className="value">{((data.voltage || 0) * (data.current || 0)).toFixed(2)}</span>
               <span className="unit">VA</span>
             </div>
             <div className="detail-card-desc">Apparent Power</div>
