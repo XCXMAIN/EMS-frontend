@@ -15,12 +15,44 @@ function App() {
   const reconnectAttempts = useRef(0);
   const maxReconnectAttempts = 5;
 
+  // 백엔드 데이터를 프론트엔드 형식으로 변환
+  const normalizeData = (rawData) => {
+    if (!rawData) return null;
+    
+    return {
+      timestamp: rawData.timestamp,
+      site: rawData.site || 'site-001',
+      // 전력 현황
+      voltage: rawData.voltage || rawData.ac_out_voltage || 0,
+      current: rawData.current || (rawData.ac_out_watt / (rawData.ac_out_voltage || 1)) || 0,
+      power: rawData.power || rawData.ac_out_watt || 0,
+      // 배터리
+      soc: rawData.soc || 0,
+      battery_voltage: rawData.battery_voltage || 0,
+      battery_temp: rawData.battery_temp || 0,
+      // 태양광
+      pv_voltage: rawData.pv_voltage || 0,
+      pv_current: rawData.pv_current || 0,
+      pv_power: rawData.pv_power || 0,
+      // 계통
+      grid_voltage: rawData.grid_voltage || 0,
+      ac_output_w: rawData.ac_output_w || rawData.ac_out_watt || 0,
+      load_percent: rawData.load_percent || 0,
+      // 기타
+      charge_current: rawData.charge_current || 0,
+      discharge_current: rawData.discharge_current || 0,
+    };
+  };
+
   // REST API로 초기 데이터 로드
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         const response = await getLatestData();
-        setData(response.data);
+        const normalized = normalizeData(response.data);
+        if (normalized) {
+          setData(normalized);
+        }
       } catch (error) {
         console.error('초기 데이터 로드 실패:', error);
       }
@@ -56,8 +88,11 @@ function App() {
 
         wsRef.current.onmessage = (event) => {
           try {
-            const newData = JSON.parse(event.data);
-            setData(newData);
+            const rawData = JSON.parse(event.data);
+            const normalized = normalizeData(rawData);
+            if (normalized) {
+              setData(normalized);
+            }
           } catch (error) {
             console.error('데이터 파싱 오류:', error);
           }
