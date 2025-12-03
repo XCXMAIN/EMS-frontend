@@ -46,22 +46,36 @@ function App() {
 
   // REST API로 초기 데이터 로드
   useEffect(() => {
+    let isMounted = true;
+    
     const fetchInitialData = async () => {
       try {
+        console.log('데이터 요청 중...');
         const response = await getLatestData();
-        const normalized = normalizeData(response.data);
-        if (normalized) {
-          setData(normalized);
+        console.log('응답 받음:', response.data);
+        
+        if (isMounted && response.data) {
+          const normalized = normalizeData(response.data);
+          console.log('정규화된 데이터:', normalized);
+          if (normalized) {
+            setData(normalized);
+          }
         }
       } catch (error) {
         console.error('초기 데이터 로드 실패:', error);
       }
     };
+    
+    // 즉시 실행
     fetchInitialData();
 
     // 주기적으로 REST API로 데이터 갱신 (WebSocket 백업)
-    const interval = setInterval(fetchInitialData, 10000);
-    return () => clearInterval(interval);
+    const interval = setInterval(fetchInitialData, 5000);
+    
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   // WebSocket 연결

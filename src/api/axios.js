@@ -5,16 +5,13 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000, // 10초 타임아웃
 });
 
 // 요청 인터셉터
 api.interceptors.request.use(
   (config) => {
-    // 필요시 토큰 추가
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    console.log('API 요청:', config.url);
     return config;
   },
   (error) => {
