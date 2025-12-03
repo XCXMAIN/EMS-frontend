@@ -94,17 +94,17 @@ function Dashboard({ data, connectionStatus }) {
           </div>
           <div className="card-content">
             <div className="power-display">
-              <span className="power-value">{data.power?.toLocaleString() || 0}</span>
+              <span className="power-value">{(data.power || 0).toFixed(2)}</span>
               <span className="power-unit">W</span>
             </div>
             <div className="power-details">
               <div className="detail-item">
                 <span className="label">전압</span>
-                <span className="value">{data.voltage || 0} V</span>
+                <span className="value">{(data.voltage || 0).toFixed(2)} V</span>
               </div>
               <div className="detail-item">
                 <span className="label">전류</span>
-                <span className="value">{data.current || 0} A</span>
+                <span className="value">{(data.current || 0).toFixed(2)} A</span>
               </div>
             </div>
           </div>
