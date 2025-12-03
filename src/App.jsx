@@ -9,11 +9,36 @@ import GridDetail from './pages/GridDetail';
 import './App.css';
 
 function App() {
-  const [data, setData] = useState(null);
+  // 로컬 스토리지에서 캐시된 데이터 불러오기
+  const getCachedData = () => {
+    try {
+      const cached = localStorage.getItem('ems_dashboard_data');
+      if (cached) {
+        return JSON.parse(cached);
+      }
+    } catch (e) {
+      console.error('캐시 로드 실패:', e);
+    }
+    return null;
+  };
+
+  const [data, setData] = useState(getCachedData);
   const [connectionStatus, setConnectionStatus] = useState('connecting');
   const wsRef = useRef(null);
   const reconnectAttempts = useRef(0);
   const maxReconnectAttempts = 5;
+
+  // 데이터 업데이트 시 로컬 스토리지에 캐시
+  const updateData = (newData) => {
+    setData(newData);
+    if (newData) {
+      try {
+        localStorage.setItem('ems_dashboard_data', JSON.stringify(newData));
+      } catch (e) {
+        console.error('캐시 저장 실패:', e);
+      }
+    }
+  };
 
   // 백엔드 데이터를 프론트엔드 형식으로 변환
   const normalizeData = (rawData) => {
@@ -58,7 +83,7 @@ function App() {
           const normalized = normalizeData(response.data);
           console.log('정규화된 데이터:', normalized);
           if (normalized) {
-            setData(normalized);
+            updateData(normalized);
           }
         }
       } catch (error) {
@@ -105,7 +130,7 @@ function App() {
             const rawData = JSON.parse(event.data);
             const normalized = normalizeData(rawData);
             if (normalized) {
-              setData(normalized);
+              updateData(normalized);
             }
           } catch (error) {
             console.error('데이터 파싱 오류:', error);
